@@ -1,0 +1,11 @@
+<div id="map"></div>
+<div id="query">
+    <form id="url-form" method="POST" action="/">
+        <input name="url" type="text" value="{{url}}" placeholder="Paste an image URL here and press enter">
+    </form>
+</div>
+<script>
+{{#if geo}}
+var data = {{{geo}}};
+{{/if}}
+</script>
