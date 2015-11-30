@@ -34,6 +34,7 @@ function response(req, res, template, vars) {
         res.end();
     } else {
         vars.geo = JSON.stringify(vars.geo);
+        vars.title = "img2map";
         res.render(template, vars);
     }
 }
