@@ -5,25 +5,23 @@ var locscan = require('../lib/GeoExtract.js');
 /* GET home page. */
 router.all('/', function(req, res, next) {
     var url = '',
-        vars = {};
+        vars = {geo:{"type":"FeatureCollection","features":[]}};
 
     // TODO: sanitize
     if (req.body.url && req.body.url.length > 0) {
         locscan.fromUrl(req.body.url, (result) => {
-
             vars.url = req.body.url;
 
             if (typeof result.error === 'undefined') {
                 result = locscan.formatFeatureCollection([result]);
-                // vars.geo = JSON.stringify(result);
                 vars.geo = result;
             }
 
-            // console.log('VARS', vars);
+            // TODO: handle error (and send to client)
+
             response(req, res, 'map', vars);
         });
     } else {
-        vars.geo = {"type":"FeatureCollection","features":[]};
         response(req, res, 'index', vars);
     }
 });

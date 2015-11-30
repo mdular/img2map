@@ -63,17 +63,18 @@ function bindForm() {
         val = input.value;
 
     form.addEventListener('submit', function (evt) {
-        // console.log(evt);
         evt.preventDefault();
 
         if (input.value === val) {
             return false;
         }
 
+        input.setAttribute('style', null);
         val = input.value;
 
         if (!isImageURL(val)) {
             console.log('not a valid url');
+            input.setAttribute('style', 'background-color:#ffaaaa');
             return false;
         }
 
@@ -82,7 +83,12 @@ function bindForm() {
         ajax.post(action, serialize({url:val})//);
         , function () {
             // console.log('Success', arguments);
-            initialize(JSON.parse(arguments[0]).geo);
+            var response = JSON.parse(arguments[0]);
+
+            // TODO: handle error
+            if (response.geo) {
+                initialize(response.geo);
+            }
         }
         , function () {
             console.log('Error', arguments);
@@ -95,8 +101,6 @@ function bindForm() {
 }
 
 window.addEventListener('load', function () {
-    console.log(data);
-
     if (data) {
         initialize(data);
     }
